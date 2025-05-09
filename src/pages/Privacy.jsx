@@ -282,6 +282,13 @@ function Privacy() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary/10 to-surface-100 dark:from-primary/5 dark:to-surface-800 py-16 md:py-24">
         <div className="container mx-auto px-4">
+          {/* Print PDF Button */}
+          <div className="absolute top-6 right-6 sm:top-8 sm:right-8 z-10 print:hidden">
+            <button onClick={handlePrint} className="btn-primary flex items-center gap-2 bg-primary/90 hover:bg-primary shadow-soft transition-all duration-200" aria-label="Print Privacy Policy">
+              <PrinterIcon className="h-5 w-5" />
+              <span>Print as PDF</span>
+            </button>
+          </div>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -307,17 +314,6 @@ function Privacy() {
             <p className="text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
               Your privacy is important to us. This Privacy Policy explains how DwellDex collects, uses, and safeguards your information when you use our services.
             </p>
-            <button
-              type="button"
-              onClick={handlePrint}
-              className="mt-8 inline-flex items-center px-4 py-2 bg-white dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm hover:bg-surface-50 dark:hover:bg-surface-600 transition-colors print:hidden"
-              aria-label="Print Privacy Policy"
-            >
-              <PrinterIcon className="h-5 w-5 mr-2 text-surface-600 dark:text-surface-400" />
-              <span className="text-surface-800 dark:text-surface-200 font-medium print:hidden">
-                Print as PDF
-              </span>
-            </button>
 
           </motion.div>
         </div>
@@ -403,7 +399,7 @@ function Privacy() {
                   transition={{ duration: 0.4 }}
                 >
                   {sectionContent[activeSection]}
-                  
+                
                   {/* Print-only: all other sections */}
                   <div className="hidden print:block print:mt-8">
                     {sections
