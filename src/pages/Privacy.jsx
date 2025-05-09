@@ -9,6 +9,7 @@ function Privacy() {
   const ShieldIcon = getIcon('Shield');
   const DatabaseIcon = getIcon('Database');
   const EyeIcon = getIcon('Eye');
+  const PrinterIcon = getIcon('Printer');
   const UserPlusIcon = getIcon('UserPlus');
   const CookieIcon = getIcon('Cookie');
   const AlertCircleIcon = getIcon('AlertCircle');
@@ -26,6 +27,10 @@ function Privacy() {
     { id: 'updates', title: 'Policy Updates', icon: <RefreshCwIcon className="h-5 w-5" /> },
     { id: 'contact', title: 'Contact Us', icon: <AlertCircleIcon className="h-5 w-5" /> }
   ];
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   const sectionContent = {
     collection: (
@@ -193,7 +198,7 @@ function Privacy() {
   };
 
   return (
-    <div>
+    <div className="privacy-policy">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary/10 to-surface-100 dark:from-primary/5 dark:to-surface-800 py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -213,6 +218,17 @@ function Privacy() {
             <p className="text-surface-600 dark:text-surface-400">
               Your privacy is important to us. This Privacy Policy explains how DwellDex collects, uses, and safeguards your information when you use our services.
             </p>
+            <button 
+              onClick={handlePrint}
+              className="mt-8 inline-flex items-center px-4 py-2 bg-white dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm hover:bg-surface-50 dark:hover:bg-surface-600 transition-colors print:hidden"
+              aria-label="Print Privacy Policy"
+            >
+              <PrinterIcon className="h-5 w-5 mr-2 text-surface-600 dark:text-surface-400" />
+              <span className="text-surface-800 dark:text-surface-200 font-medium">
+                Print as PDF
+              </span>
+            </button>
+
           </motion.div>
         </div>
       </section>
@@ -220,10 +236,10 @@ function Privacy() {
       {/* Privacy Content */}
       <section className="py-16 bg-surface-50 dark:bg-surface-900">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 print:grid-cols-1 print:gap-0">
             {/* Navigation Sidebar */}
-            <div className="lg:sticky lg:top-20 h-fit">
-              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-4">
+            <div className="lg:sticky lg:top-20 h-fit print:hidden">
+              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-4 print:shadow-none">
                 <h3 className="font-bold text-lg mb-4">Privacy Policy Contents</h3>
                 <nav>
                   <ul className="space-y-1">
@@ -248,8 +264,12 @@ function Privacy() {
             </div>
             
             {/* Content Area */}
-            <div className="lg:col-span-3">
-              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-6 md:p-8">
+            <div className="lg:col-span-3 print:col-span-full">
+              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-6 md:p-8 print:shadow-none print:p-0 print:bg-white">
+                {/* Print-only all sections header */}
+                <div className="hidden print:block print:mb-8">
+                  <h2 className="text-2xl font-bold mb-6 print:text-black">Complete Privacy Policy</h2>
+                </div>
                 <motion.div
                   key={activeSection}
                   initial={{ opacity: 0, y: 10 }}
@@ -257,6 +277,43 @@ function Privacy() {
                   transition={{ duration: 0.3 }}
                 >
                   {sectionContent[activeSection]}
+                  
+                  {/* Print-only: all other sections */}
+                  <div className="hidden print:block print:mt-8">
+                    {sections
+                      .filter(section => section.id !== activeSection)
+                      .map(section => (
+                        <div key={section.id} className="print:mb-10">
+                          <hr className="print:mb-6 print:border-gray-300" />
+                          {sectionContent[section.id]}
+                        </div>
+                      ))}
+                  </div>
+                  
+                  {/* Print-only footer */}
+                  <div className="hidden print:block print:mt-12 print:border-t print:border-gray-300 print:pt-6">
+                    <div className="print:flex print:justify-between">
+                      <div>
+                        <p className="print:text-sm print:text-gray-600">
+                          DwellDex Privacy Policy
+                        </p>
+                      </div>
+                      <div>
+                        <p className="print:text-sm print:text-gray-600">
+                          Last Updated: May 15, 2023
+                        </p>
+                      </div>
+                    </div>
+                    <p className="print:text-sm print:text-gray-600 print:mt-2">
+                      This document was printed on {new Date().toLocaleDateString()}
+                    </p>
+                    <p className="print:text-sm print:text-gray-600 print:mt-4">
+                      For the most up-to-date version of our Privacy Policy, please visit{" "}
+                      <span className="print:font-medium">
+                        https://dwelldex.com/privacy
+                      </span>
+                    </p>
+                  </div>
                 </motion.div>
               </div>
             </div>
