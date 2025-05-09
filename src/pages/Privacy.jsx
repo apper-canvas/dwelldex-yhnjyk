@@ -266,11 +266,10 @@ function Privacy() {
             {/* Content Area */}
             <div className="lg:col-span-3 print:col-span-full">
               <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-6 md:p-8 print:shadow-none print:p-0 print:bg-white">
-                <div className="hidden print:block print:mb-4">
                 <div className="hidden print:block print:mb-8">
                   <h2 className="text-2xl font-bold mb-6 print:text-black">Complete Privacy Policy</h2>
                 </div>
-                  key={activeSection} 
+                <motion.div
                   key={activeSection}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
