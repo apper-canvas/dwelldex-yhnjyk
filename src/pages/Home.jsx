@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
 
 function Home({ toast }) {
