@@ -189,7 +189,7 @@ function Contact({ toast }) {
                     Your Name
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center justify-center pointer-events-none">
                       <UserIcon className="h-5 w-5 text-surface-400" />
                     </div>
                     <input
@@ -210,7 +210,7 @@ function Contact({ toast }) {
                     Your Email
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center justify-center pointer-events-none">
                       <AtSignIcon className="h-5 w-5 text-surface-400" />
                     </div>
                     <input
@@ -231,7 +231,7 @@ function Contact({ toast }) {
                     Subject
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center justify-center pointer-events-none">
                       <MessageSquareIcon className="h-5 w-5 text-surface-400" />
                     </div>
                     <input
@@ -251,14 +251,19 @@ function Contact({ toast }) {
                   <label htmlFor="message" className="block mb-2 text-sm font-medium text-surface-700 dark:text-surface-300">
                     Your Message
                   </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="5"
-                    value={formData.message}
-                    onChange={handleChange}
-                    className={`w-full rounded-lg border ${errors.message ? 'border-red-500 dark:border-red-500' : 'border-surface-300 dark:border-surface-600'} p-3 bg-white dark:bg-surface-700 focus:ring-2 focus:ring-primary dark:focus:ring-primary-light focus:border-transparent outline-none transition-all`}
-                    placeholder="I'm interested in learning more about..."
+                  <div className="relative">
+                    <div className="absolute top-3 left-0 pl-3 flex items-start justify-center pointer-events-none">
+                      <MessageSquareIcon className="h-5 w-5 text-surface-400" />
+                    </div>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows="5"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className={`pl-10 w-full rounded-lg border ${errors.message ? 'border-red-500 dark:border-red-500' : 'border-surface-300 dark:border-surface-600'} p-3 bg-white dark:bg-surface-700 focus:ring-2 focus:ring-primary dark:focus:ring-primary-light focus:border-transparent outline-none transition-all`}
+                      placeholder="I'm interested in learning more about..."
+                    ></textarea>
                   ></textarea>
                   {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
                 </div>
@@ -266,7 +271,7 @@ function Contact({ toast }) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary mt-4 flex items-center justify-center gap-2 w-full"
+                  className="btn-primary mt-6 flex items-center justify-center gap-2 w-full shadow-md hover:shadow-lg transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <>Sending...</>
@@ -285,5 +290,6 @@ function Contact({ toast }) {
     </div>
   );
 }
+
 
 export default Contact;
