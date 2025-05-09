@@ -318,7 +318,7 @@ function Home({ toast }) {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-white dark:bg-surface-900">
+      <section className="py-10 bg-white dark:bg-surface-900">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -326,8 +326,8 @@ function Home({ toast }) {
             transition={{ duration: 0.5 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-4">What Our Clients Say</h2>
-            <p className="text-lg text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+            <h2 className="text-2xl font-bold mb-3">What Our Clients Say</h2>
+            <p className="text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
               Discover why thousands of homebuyers and property investors trust DwellDex to help them make informed real estate decisions.
             </p>
           </motion.div>
@@ -339,14 +339,14 @@ function Home({ toast }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
-                className="card p-6 flex flex-col h-full relative"
+                className="card p-4 flex flex-col h-full relative"
               >
                 <div className="absolute text-primary/10 dark:text-primary/20 top-4 right-4">
-                  <QuoteIcon className="w-8 h-8" />
+                  <QuoteIcon className="w-6 h-6" />
                 </div>
                 
-                <div className="flex items-center mb-4">
-                  <div className="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 border-white dark:border-surface-700 shadow-sm">
+                <div className="flex items-center mb-3">
+                  <div className="w-10 h-10 rounded-full overflow-hidden mr-3 border-2 border-white dark:border-surface-700 shadow-sm">
                     <img 
                       src={testimonial.image} 
                       alt={testimonial.name} 
@@ -363,7 +363,7 @@ function Home({ toast }) {
                   {renderStars(testimonial.rating)}
                 </div>
                 
-                <blockquote className="flex-1 text-surface-700 dark:text-surface-300">
+                <blockquote className="flex-1 text-surface-700 dark:text-surface-300 text-sm">
                   <p className="italic">"{testimonial.testimonial}"</p>
                 </blockquote>
               </motion.div>
@@ -374,11 +374,79 @@ function Home({ toast }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-10 flex justify-center"
+            className="mt-6 flex justify-center"
           >
             <a href="/testimonials" className="flex items-center text-primary hover:text-primary-dark dark:hover:text-primary-light transition-colors font-medium">
               <span>View all testimonials</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="py-12 bg-surface-50 dark:bg-surface-800">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-10"
+          >
+            <h2 className="text-2xl font-bold mb-3">Our Trusted Partners</h2>
+            <p className="text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+              We collaborate with leading companies in real estate to provide you with the best service
+            </p>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6"
+          >
+            {[
+              { id: 1, name: "Realtor Group", logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80" },
+              { id: 2, name: "Home Finder", logo: "https://images.unsplash.com/photo-1560180474-e8563fd75bab?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80" },
+              { id: 3, name: "Property Experts", logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80" },
+              { id: 4, name: "Estate Quest", logo: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80" },
+              { id: 5, name: "Dream Homes", logo: "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80" },
+              { id: 6, name: "Urban Living", logo: "https://images.unsplash.com/photo-1598128558393-70ff21433be0?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80" },
+            ].map((partner) => (
+              <motion.div
+                key={partner.id}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white dark:bg-surface-700 rounded-lg p-4 flex items-center justify-center h-24 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <img 
+                  src={partner.logo} 
+                  alt={`${partner.name} logo`} 
+                  className="max-h-16 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-8 text-center"
+          >
+            <a 
+              href="/partners" 
+              className="inline-flex items-center text-primary hover:text-primary-dark dark:hover:text-primary-light transition-colors text-sm font-medium"
+            >
+              <span>Become a partner</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-4 w-4 ml-1" 
+                viewBox="0 0 20 20" 
+                fill="currentColor"
+              >
                 <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </a>
