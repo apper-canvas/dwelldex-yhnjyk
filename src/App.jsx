@@ -41,6 +41,10 @@ function App() {
   const MoonIcon = getIcon('Moon');
   const SunIcon = getIcon('Sun');
   const HomeIcon = getIcon('Home');
+  const MenuIcon = getIcon('Menu');
+  const MapIcon = getIcon('Map');
+  const UserIcon = getIcon('User');
+  const XIcon = getIcon('X');
 
   return (
     <>
@@ -51,7 +55,53 @@ function App() {
             <span className="text-xl font-bold">DwellDex</span>
           </a>
           
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
+            <Link 
+              to="/" 
+              className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+            >
+              Home
+            </Link>
+            <Link 
+              to="/about" 
+              className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+            >
+              About
+            </Link>
+            <Link 
+              to="/locality-insights" 
+              className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+            >
+              <div className="flex items-center gap-1">
+                <MapIcon className="h-4 w-4" />
+                <span>Insights</span>
+              </div>
+            </Link>
+            <Link 
+              to="/contact" 
+              className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+            >
+              Contact
+            </Link>
+          </nav>
+          
           <div className="flex items-center gap-4">
+            {/* Authentication Links */}
+            <div className="hidden md:flex items-center gap-3">
+              <Link 
+                to="/login" 
+                className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+              >
+                Login
+              </Link>
+              <Link 
+                to="/register" 
+                className="btn-primary text-sm py-1.5"
+              >
+                Register
+              </Link>
+            </div>
             <button 
               onClick={toggleDarkMode}
               className="p-2 rounded-full bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200"
@@ -72,6 +122,17 @@ function App() {
                   )}
                 </motion.div>
               </AnimatePresence>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-2 rounded-full bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200"
+              aria-label="Open menu"
+            >
+              <motion.div whileTap={{ scale: 0.9 }}>
+                <MenuIcon className="h-5 w-5 text-surface-600 dark:text-surface-400" />
+              </motion.div>
+            </button>
+            
             </button>
           </div>
         </div>
