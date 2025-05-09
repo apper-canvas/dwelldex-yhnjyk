@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import getIcon from '../utils/iconUtils';
@@ -11,6 +11,21 @@ function PropertyDetail({ toast }) {
   const [activeImage, setActiveImage] = useState(0);
   const [similarProperties, setSimilarProperties] = useState([]);
 
+  // Reviews state
+  const [reviews, setReviews] = useState([]);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [newReview, setNewReview] = useState({
+    name: '',
+    email: '',
+    comment: '',
+    ratings: {
+      overall: 0,
+      location: 0,
+      cleanliness: 0,
+      amenities: 0,
+      value: 0
+    }
+  });
   // Icon component declarations
   const ArrowLeftIcon = getIcon('ArrowLeft');
   const HomeIcon = getIcon('Home');
@@ -26,6 +41,11 @@ function PropertyDetail({ toast }) {
   const CheckIcon = getIcon('Check');
   const PhoneIcon = getIcon('Phone');
   const MailIcon = getIcon('Mail');
+  const StarIcon = getIcon('Star');
+  const StarHalfIcon = getIcon('StarHalf');
+  const ClipboardEditIcon = getIcon('ClipboardEdit');
+  const SendIcon = getIcon('Send');
+  const XIcon = getIcon('X');
 
   // Dummy property data
   const dummyProperties = [
@@ -152,6 +172,52 @@ function PropertyDetail({ toast }) {
       amenities: ["Exposed Brick", "High Ceilings", "Industrial Windows", "Fitness Center", "Bike Room", "Package Service"]
     }
   ];
+  // Dummy reviews data
+  const dummyReviews = [
+    {
+      id: 101,
+      propertyId: 1,
+      name: "Michael Brown",
+      avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-09-14",
+      ratings: { overall: 5, location: 5, cleanliness: 4, amenities: 5, value: 4 },
+      comment: "Absolutely stunning property with incredible views! The villa exceeded all our expectations with its modern design and luxurious amenities. The waterfront location is breathtaking, especially at sunset. Everything was immaculate upon our arrival and the management team was responsive and professional."
+    },
+    {
+      id: 102,
+      propertyId: 1,
+      name: "Jennifer Wilson",
+      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-08-22",
+      ratings: { overall: 4, location: 5, cleanliness: 4, amenities: 4, value: 3 },
+      comment: "We had a wonderful stay at this beautiful villa. The location is perfect - close to restaurants and shopping while still feeling private and secluded. The kitchen was well-equipped and the bedrooms were comfortable. My only suggestion would be to update some of the outdoor furniture. Overall, a great experience and we would definitely return!"
+    },
+    {
+      id: 103,
+      propertyId: 2,
+      name: "Robert Taylor",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-07-30",
+      ratings: { overall: 5, location: 5, cleanliness: 5, amenities: 4, value: 4 },
+      comment: "Perfect location in the heart of Manhattan! The apartment was exactly as pictured - modern, clean, and well-appointed. The building amenities were fantastic, especially the rooftop terrace with amazing city views. Highly recommend for anyone wanting a luxury stay in NYC."
+    },
+    {
+      id: 104,
+      propertyId: 3,
+      name: "Lisa Martinez",
+      avatar: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-10-05",
+      ratings: { overall: 5, location: 5, cleanliness: 5, amenities: 5, value: 5 },
+      comment: "This mountain cabin is a dream come true! The location is serene and the views are spectacular. We loved waking up each morning to see the mountains right outside our window. The interior is rustic yet comfortable, and the fireplace made our evenings so cozy. Perfect for a retreat from city life."
+    }
+  ];
+
+  // Ref for scrolling to review form
+  const reviewFormRef = useRef(null);
+
+  // Function to scroll to review form
+  const scrollToReviewForm = () => reviewFormRef.current?.scrollIntoView({ behavior: 'smooth' });
+
 
   useEffect(() => {
     // Simulate loading property data
@@ -164,6 +230,12 @@ function PropertyDetail({ toast }) {
         const similar = dummyProperties
           .filter(p => p.id !== foundProperty.id && (p.type === foundProperty.type || p.location === foundProperty.location))
           .slice(0, 3);
+        
+        // Set reviews for the property
+        const propertyReviews = dummyReviews.filter(review => 
+          review.propertyId === foundProperty.id
+        );
+        setReviews(propertyReviews);
         setSimilarProperties(similar);
       }
       setLoading(false);
@@ -189,6 +261,111 @@ function PropertyDetail({ toast }) {
     toast.success("Your request has been sent to the agent!");
   };
 
+  // Calculate average rating
+  const calculateAverageRating = (category = 'overall') => {
+    if (reviews.length === 0) return 0;
+    const sum = reviews.reduce((acc, review) => acc + review.ratings[category], 0);
+    return sum / reviews.length;
+  };
+
+  // Format date
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  // Render stars for rating
+  const renderStars = (rating, size = 'h-5 w-5') => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating - fullStars >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    
+    return (
+      <div className="flex">
+        {[...Array(fullStars)].map((_, i) => (
+          <StarIcon key={`full-${i}`} className={`${size} text-yellow-400 fill-current`} />
+        ))}
+        {hasHalfStar && <StarHalfIcon className={`${size} text-yellow-400 fill-current`} />}
+        {[...Array(emptyStars)].map((_, i) => (
+          <StarIcon key={`empty-${i}`} className={`${size} text-surface-300 dark:text-surface-600`} />
+        ))}
+      </div>
+    );
+  };
+
+  // Handle star rating selection
+  const handleRatingChange = (category, value) => {
+    setNewReview(prev => ({
+      ...prev,
+      ratings: {
+        ...prev.ratings,
+        [category]: value,
+        overall: category === 'overall' ? value : prev.ratings.overall
+      }
+    }));
+  };
+  
+  // Render selectable stars for review form
+  const renderSelectableStars = (category) => {
+    return (
+      <div className="flex">
+        {[1, 2, 3, 4, 5].map((value) => (
+          <button
+            key={value}
+            type="button"
+            onClick={() => handleRatingChange(category, value)}
+            className="focus:outline-none"
+          >
+            <StarIcon 
+              className={`h-6 w-6 ${
+                value <= newReview.ratings[category] 
+                  ? 'text-yellow-400 fill-current' 
+                  : 'text-surface-300 dark:text-surface-600'
+              }`} 
+            />
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  // Handle review form change
+  const handleReviewFormChange = (e) => {
+    const { name, value } = e.target;
+    setNewReview(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle review submission
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    
+    // Form validation
+    if (!newReview.name || !newReview.email || !newReview.comment || newReview.ratings.overall === 0) {
+      toast.error("Please complete all required fields");
+      return;
+    }
+    
+    // Create new review object
+    const review = {
+      id: Date.now(),
+      propertyId: property.id,
+      name: newReview.name,
+      avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80", // Default avatar
+      date: new Date().toISOString().split('T')[0],
+      ratings: { ...newReview.ratings },
+      comment: newReview.comment
+    };
+    
+    // Add new review to reviews array
+    setReviews(prev => [review, ...prev]);
+    toast.success("Thank you for your review!");
+    setShowReviewForm(false);
+    setNewReview({ name: '', email: '', comment: '', ratings: { overall: 0, location: 0, cleanliness: 0, amenities: 0, value: 0 } });
+  };
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-16">
@@ -203,6 +380,7 @@ function PropertyDetail({ toast }) {
               <div className="h-60 bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
             </div>
             <div>
+              <div className="h-40 bg-surface-200 dark:bg-surface-700 rounded-xl mb-8"></div>
               <div className="h-80 bg-surface-200 dark:bg-surface-700 rounded-xl mb-8"></div>
               <div className="h-40 bg-surface-200 dark:bg-surface-700 rounded-xl"></div>
             </div>
@@ -351,6 +529,212 @@ function PropertyDetail({ toast }) {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Ratings and Reviews Section */}
+            <div className="bg-white dark:bg-surface-800 rounded-xl p-6 shadow-card">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">Ratings & Reviews</h2>
+                <button 
+                  onClick={() => {
+                    setShowReviewForm(true);
+                    // Small delay to ensure component is rendered before scrolling
+                    setTimeout(scrollToReviewForm, 100);
+                  }}
+                  className="btn-primary flex items-center gap-2"
+                >
+                  <ClipboardEditIcon className="h-4 w-4" />
+                  Write a Review
+                </button>
+              </div>
+              
+              {/* Overall Rating */}
+              <div className="flex flex-col md:flex-row gap-8 mb-8 pb-8 border-b border-surface-200 dark:border-surface-700">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="text-5xl font-bold text-primary dark:text-primary-light mb-2">
+                    {calculateAverageRating().toFixed(1)}
+                  </div>
+                  <div className="mb-2">
+                    {renderStars(calculateAverageRating(), 'h-6 w-6')}
+                  </div>
+                  <div className="text-sm text-surface-500 dark:text-surface-400">
+                    Based on {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
+                  </div>
+                </div>
+                
+                <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium w-24">Location</span>
+                    <div className="flex-1">
+                      {renderStars(calculateAverageRating('location'), 'h-4 w-4')}
+                    </div>
+                    <span className="text-sm font-bold">{calculateAverageRating('location').toFixed(1)}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium w-24">Cleanliness</span>
+                    <div className="flex-1">
+                      {renderStars(calculateAverageRating('cleanliness'), 'h-4 w-4')}
+                    </div>
+                    <span className="text-sm font-bold">{calculateAverageRating('cleanliness').toFixed(1)}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium w-24">Amenities</span>
+                    <div className="flex-1">
+                      {renderStars(calculateAverageRating('amenities'), 'h-4 w-4')}
+                    </div>
+                    <span className="text-sm font-bold">{calculateAverageRating('amenities').toFixed(1)}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium w-24">Value</span>
+                    <div className="flex-1">
+                      {renderStars(calculateAverageRating('value'), 'h-4 w-4')}
+                    </div>
+                    <span className="text-sm font-bold">{calculateAverageRating('value').toFixed(1)}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Review Form */}
+              {showReviewForm && (
+                <div 
+                  ref={reviewFormRef}
+                  className="mb-8 p-6 bg-surface-50 dark:bg-surface-700 rounded-xl"
+                >
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-xl font-bold">Write Your Review</h3>
+                    <button 
+                      onClick={() => setShowReviewForm(false)}
+                      className="p-1 rounded-full hover:bg-surface-200 dark:hover:bg-surface-600"
+                    >
+                      <XIcon className="h-5 w-5" />
+                    </button>
+                  </div>
+                  
+                  <form onSubmit={handleSubmitReview}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-1">Name*</label>
+                        <input 
+                          type="text" 
+                          name="name" 
+                          value={newReview.name} 
+                          onChange={handleReviewFormChange} 
+                          className="input" 
+                          required 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1">Email*</label>
+                        <input 
+                          type="email" 
+                          name="email" 
+                          value={newReview.email} 
+                          onChange={handleReviewFormChange} 
+                          className="input" 
+                          required 
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium mb-1">Overall Rating*</label>
+                      {renderSelectableStars('overall')}
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-1">Location</label>
+                        {renderSelectableStars('location')}
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1">Cleanliness</label>
+                        {renderSelectableStars('cleanliness')}
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1">Amenities</label>
+                        {renderSelectableStars('amenities')}
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-1">Value</label>
+                        {renderSelectableStars('value')}
+                      </div>
+                    </div>
+                    
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium mb-1">Your Review*</label>
+                      <textarea 
+                        name="comment" 
+                        value={newReview.comment} 
+                        onChange={handleReviewFormChange} 
+                        className="input min-h-32" 
+                        required
+                      ></textarea>
+                    </div>
+                    
+                    <button 
+                      type="submit" 
+                      className="btn-primary flex items-center justify-center gap-2"
+                    >
+                      <SendIcon className="h-4 w-4" />
+                      Submit Review
+                    </button>
+                  </form>
+                </div>
+              )}
+              
+              {/* Reviews List */}
+              <div>
+                {reviews.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-surface-500 dark:text-surface-400 mb-4">No reviews yet</p>
+                    <button 
+                      onClick={() => {
+                        setShowReviewForm(true);
+                        setTimeout(scrollToReviewForm, 100);
+                      }}
+                      className="btn-outline"
+                    >
+                      Be the first to review
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {reviews.map((review) => (
+                      <div key={review.id} className="pb-6 border-b border-surface-200 dark:border-surface-700 last:border-0">
+                        <div className="flex items-start gap-4 mb-3">
+                          <div className="h-12 w-12 rounded-full bg-surface-200 dark:bg-surface-700 overflow-hidden flex-shrink-0">
+                            <img 
+                              src={review.avatar} 
+                              alt={review.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                              <h4 className="font-bold">{review.name}</h4>
+                              <span className="text-sm text-surface-500 dark:text-surface-400">
+                                {formatDate(review.date)}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 mb-3">
+                              {renderStars(review.ratings.overall, 'h-4 w-4')}
+                              <span className="text-sm font-medium">
+                                {review.ratings.overall.toFixed(1)}
+                              </span>
+                            </div>
+                            <p className="text-surface-600 dark:text-surface-400">
+                              {review.comment}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
