@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
 
@@ -8,6 +9,7 @@ function Home({ toast }) {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
+  const navigate = useNavigate();
 
   // Icon component declarations
   const SearchIcon = getIcon('Search');
@@ -297,7 +299,11 @@ function Home({ toast }) {
                       </div>
                     </div>
                     
-                    <button className="w-full btn-primary">View Details</button>
+                    <button 
+                      className="w-full btn-primary"
+                      onClick={() => navigate(`/property/${property.id}`)}
+                    >
+                      View Details</button>
                   </div>
                 </motion.div>
               ))}
