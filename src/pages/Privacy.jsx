@@ -42,7 +42,11 @@ function Privacy() {
   }, [activeSection]);
 
   const handlePrint = () => {
-    window.print();
+    // Set a small timeout to ensure content is ready for printing
+    setTimeout(() => {
+      setActiveSection('collection'); // Reset to first section to ensure proper printing
+      window.print();
+    }, 100);
   };
 
   // Helper function to navigate between sections
@@ -284,7 +288,7 @@ function Privacy() {
         <div className="container mx-auto px-4">
           {/* Print PDF Button */}
           <div className="absolute top-6 right-6 sm:top-8 sm:right-8 z-10 print:hidden">
-            <button onClick={handlePrint} className="btn-primary flex items-center gap-2 bg-primary/90 hover:bg-primary shadow-soft transition-all duration-200" aria-label="Print Privacy Policy">
+            <button onClick={handlePrint} className="btn-primary flex items-center gap-2 bg-primary/90 hover:bg-primary shadow-lg transition-all duration-200" aria-label="Print Privacy Policy">
               <PrinterIcon className="h-5 w-5" />
               <span>Print as PDF</span>
             </button>
@@ -296,7 +300,7 @@ function Privacy() {
             className="max-w-3xl mx-auto text-center"
           >
             <h1 className="mb-6">Privacy Policy</h1>
-            <p className="text-lg md:text-xl text-surface-600 dark:text-surface-400 mb-8">
+            <p className="text-lg md:text-xl text-surface-600 dark:text-surface-400 mb-8 print:mb-3">
               Last Updated: May 15, 2023
             </p>
             <div className="relative inline-block mb-8 print:hidden">
@@ -314,7 +318,7 @@ function Privacy() {
             <p className="text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
               Your privacy is important to us. This Privacy Policy explains how DwellDex collects, uses, and safeguards your information when you use our services.
             </p>
-
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -322,7 +326,7 @@ function Privacy() {
       {/* Privacy Content */}
       <section className="py-16 bg-surface-50 dark:bg-surface-900">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 print:grid-cols-1 print:gap-0">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 print:block print:grid-cols-1 print:gap-0">
             {/* Navigation Sidebar */}
             <div className="lg:sticky lg:top-20 h-fit print:hidden">
               <div className="bg-white dark:bg-surface-800 rounded-xl shadow-card dark:shadow-none border border-surface-200 dark:border-surface-700 overflow-hidden p-5 print:shadow-none">
@@ -386,12 +390,11 @@ function Privacy() {
               </div>
             </div>
             {/* Content Area */} 
-            {/* Content Area */}
-            <div className="lg:col-span-3 print:col-span-full">
-              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-6 md:p-8 print:shadow-none print:p-0 print:bg-white">
-                <div className="hidden print:block print:mb-8">
-                  <h2 className="text-2xl font-bold mb-6 print:text-black">Complete Privacy Policy</h2>
-                </div>
+            <div className="lg:col-span-3 print:width-full print-content">
+              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-lg dark:shadow-none p-6 md:p-8 print:shadow-none print:p-0 print:bg-white">
+                <h2 className="hidden print:block print:mb-6 print:mt-4 print:text-black">
+                  Complete Privacy Policy
+                </h2>
                 <motion.div
                   key={activeSection}
                   initial={{ opacity: 0, y: 10 }}
@@ -401,24 +404,21 @@ function Privacy() {
                   {sectionContent[activeSection]}
                 
                   {/* Print-only: all other sections */}
-                  <div className="hidden print:block print:mt-8">
+                  <div className="hidden print:block print:mt-6 print-content">
                     {sections
                       .filter(section => section.id !== activeSection)
                       .map(section => (
-                        <div key={section.id} className="print:mb-10">
-                          <hr className="print:mb-6 print:border-gray-300" />
+                        <div key={section.id} className="print:mb-10 print-content">
+                          <hr className="print:mb-4 print:border-gray-300" />
                           {sectionContent[section.id]}
                         </div>
                       ))}
                   </div>
                   
                   {/* Print-only footer */}
-                  <div className="hidden print:block print:mt-12 print:border-t print:border-gray-300 print:pt-6">
-                    <div className="print:flex print:justify-between">
-                      <div>
-                        <p className="print:text-sm print:text-gray-600">
-                          DwellDex Privacy Policy
-                        </p>
+                  <div className="hidden print:block print:mt-8 print:border-t print:border-gray-300 print:pt-4 print-content">
+                    <div className="print:flex print:justify-between print:items-center">
+                      <div className="print:text-sm print:text-gray-600">DwellDex Privacy Policy
                       </div>
                       <div>
                         <p className="print:text-sm print:text-gray-600">
@@ -429,7 +429,7 @@ function Privacy() {
                     <p className="print:text-sm print:text-gray-600 print:mt-2">
                       This document was printed on {new Date().toLocaleDateString()}
                     </p>
-                    <p className="print:text-sm print:text-gray-600 print:mt-4">
+                    <p className="print:text-sm print:text-gray-600 print:mt-2">
                       For the most up-to-date version of our Privacy Policy, please visit{" "} 
                       <span className="print:font-medium">
                         https://dwelldex.com/privacy

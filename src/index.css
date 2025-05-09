@@ -89,6 +89,7 @@
   /* Print-specific utilities */
   @media print {
     /* Hide navigation, backgrounds, etc. */
+    @page { margin: 0.5cm; }
     body {
       background-color: white !important;
       color: black !important;
@@ -111,7 +112,7 @@
       background-color: transparent !important;
       background-image: none !important;
       box-shadow: none !important;
-      border-color: #ddd !important;
+      border: none !important;
       color: black !important;
     }
 
@@ -121,12 +122,14 @@
       width: 100% !important;
       padding: 0 !important;
       margin: 0 !important;
-      display: block !important;
+      position: static !important;
+      transform: none !important;
+      float: none !important;
     }
 
     /* Remove any effects that don't print well */
     h1, h2, h3, h4, h5, h6 {
-      color: black !important;
+      color: #000 !important;
       margin-top: 1.5em !important;
       margin-bottom: 0.75em !important;
       font-weight: bold !important;
@@ -134,8 +137,9 @@
     }
 
     h1 {
-      font-size: 24pt !important;
+      font-size: 20pt !important;
       margin-top: 0 !important;
+      page-break-after: avoid;
     }
 
     h2 {
@@ -144,28 +148,34 @@
 
     h3 {
       font-size: 14pt !important;
-      border-bottom: 1px solid #ccc !important;
-      padding-bottom: 5px !important;
+      border-bottom: 0.5pt solid #888 !important;
+      padding-bottom: 0.25cm !important;
       page-break-after: avoid;
     }
 
     p, li {
-      color: #333 !important;
+      color: #000 !important;
+      font-size: 10pt !important;
+      line-height: 1.4 !important;
+      margin-bottom: 0.25cm !important;
+      page-break-inside: avoid;
     }
 
     /* Layout adjustments */
     section {
       display: block !important;
       page-break-inside: avoid;
+      position: static !important;
+      transform: none !important;
     }
 
-    .grid,
-    .flex {
+    .grid, .flex {
       display: block !important;
+      position: static !important;
     }
 
     /* Remove rounded corners and shadows */
-    .rounded-xl,
+    .rounded-xl, 
     .rounded-lg,
     .rounded-full {
       border-radius: 0 !important;
@@ -176,7 +186,15 @@
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
-      animation: none !important;
+    }
+    
+    /* Ensure print content is visible */
+    .print-content {
+      display: block !important;
+      visibility: visible !important;
+      position: static !important;
+      overflow: visible !important;
+      height: auto !important;
     }
   }
 }
