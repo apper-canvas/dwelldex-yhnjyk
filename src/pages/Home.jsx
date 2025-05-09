@@ -124,91 +124,139 @@ function Home({ toast }) {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/10 to-surface-100 dark:from-primary/5 dark:to-surface-800 py-16 md:py-24">
+      <section className="relative bg-gradient-to-br from-primary/10 to-surface-100 dark:from-primary/5 dark:to-surface-800 py-16 md:py-28 overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-6 text-balance"
-            >
-              Find Your Perfect Home with DwellDex
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg md:text-xl text-surface-600 dark:text-surface-400 mb-8 text-balance"
-            >
-              Discover properties that match your lifestyle with our intuitive property listing platform
-            </motion.p>
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+            <div className="w-full lg:w-1/2 text-center lg:text-left">
+              <motion.h1 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mb-6 text-balance font-bold"
+              >
+                Your Dream Home is Just a Click Away
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-lg md:text-xl text-surface-600 dark:text-surface-400 mb-8 text-balance"
+              >
+                DwellDex helps you discover properties perfectly matched to your lifestyle, budget, and dreams. 
+                Our smart search tools and comprehensive listings make finding your ideal home easier than ever before.
+              </motion.p>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="relative max-w-2xl mx-auto lg:mx-0"
+              >
+                <div className="relative flex items-center rounded-full overflow-hidden shadow-soft bg-white dark:bg-surface-800">
+                  <SearchIcon className="absolute left-4 h-5 w-5 text-surface-400" />
+                  <input 
+                    type="text" 
+                    placeholder="Search by location, property name..." 
+                    className="pl-12 pr-4 py-4 w-full focus:outline-none bg-transparent"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                
+                <div className="mt-4 flex flex-wrap justify-center lg:justify-start gap-2">
+                  <button 
+                    onClick={() => setFilterType('all')} 
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      filterType === 'all' 
+                        ? 'bg-primary text-white' 
+                        : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
+                    }`}
+                  >
+                    All Properties
+                  </button>
+                  <button 
+                    onClick={() => setFilterType('house')} 
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      filterType === 'house' 
+                        ? 'bg-primary text-white' 
+                        : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
+                    }`}
+                  >
+                    Houses
+                  </button>
+                  <button 
+                    onClick={() => setFilterType('apartment')} 
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      filterType === 'apartment' 
+                        ? 'bg-primary text-white' 
+                        : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
+                    }`}
+                  >
+                    Apartments
+                  </button>
+                  <button 
+                    onClick={() => setFilterType('condo')} 
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      filterType === 'condo' 
+                        ? 'bg-primary text-white' 
+                        : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
+                    }`}
+                  >
+                    Condos
+                  </button>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="mt-8 hidden md:flex items-center justify-center lg:justify-start gap-8"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3].map(i => (
+                      <div key={i} className={`w-8 h-8 rounded-full border-2 border-white dark:border-surface-800 bg-surface-${200 + i*100} dark:bg-surface-${600 - i*100}`}></div>
+                    ))}
+                  </div>
+                  <span className="text-sm text-surface-600 dark:text-surface-400">10k+ satisfied customers</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map(i => (
+                      <DollarSignIcon key={i} className="w-4 h-4 text-secondary" />
+                    ))}
+                  </div>
+                  <span className="text-sm text-surface-600 dark:text-surface-400">Best value properties</span>
+                </div>
+              </motion.div>
+            </div>
             
             <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="relative mx-auto max-w-2xl"
+              className="w-full lg:w-1/2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <div className="relative flex items-center rounded-full overflow-hidden shadow-soft bg-white dark:bg-surface-800">
-                <SearchIcon className="absolute left-4 h-5 w-5 text-surface-400" />
-                <input 
-                  type="text" 
-                  placeholder="Search by location, property name..." 
-                  className="pl-12 pr-4 py-4 w-full focus:outline-none bg-transparent"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+              <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                  alt="Luxury modern home with swimming pool" 
+                  className="w-full h-auto object-cover aspect-[4/3]"
                 />
-              </div>
-              
-              <div className="mt-4 flex flex-wrap justify-center gap-2">
-                <button 
-                  onClick={() => setFilterType('all')} 
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    filterType === 'all' 
-                      ? 'bg-primary text-white' 
-                      : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
-                  }`}
-                >
-                  All Properties
-                </button>
-                <button 
-                  onClick={() => setFilterType('house')} 
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    filterType === 'house' 
-                      ? 'bg-primary text-white' 
-                      : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
-                  }`}
-                >
-                  Houses
-                </button>
-                <button 
-                  onClick={() => setFilterType('apartment')} 
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    filterType === 'apartment' 
-                      ? 'bg-primary text-white' 
-                      : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
-                  }`}
-                >
-                  Apartments
-                </button>
-                <button 
-                  onClick={() => setFilterType('condo')} 
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    filterType === 'condo' 
-                      ? 'bg-primary text-white' 
-                      : 'bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
-                  }`}
-                >
-                  Condos
-                </button>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-surface-800/90 backdrop-blur-sm rounded-lg px-4 py-2 text-sm font-medium">
+                  <span className="text-primary dark:text-primary-light">Featured Property</span>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
 
         {/* Decorative elements */}
-        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-r from-transparent via-primary/5 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
+        <div className="absolute top-1/4 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
       </section>
 
       {/* Property Listings */}
