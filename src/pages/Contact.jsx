@@ -266,6 +266,7 @@ function Contact({ toast }) {
                     ></textarea>
                   </div>
                   {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
+                </div>
                 
                 <button
                   type="submit"
