@@ -264,7 +264,6 @@ function Contact({ toast }) {
                       className={`pl-10 w-full rounded-lg border ${errors.message ? 'border-red-500 dark:border-red-500' : 'border-surface-300 dark:border-surface-600'} p-3 bg-white dark:bg-surface-700 focus:ring-2 focus:ring-primary dark:focus:ring-primary-light focus:border-transparent outline-none transition-all`}
                       placeholder="I'm interested in learning more about..."
                     ></textarea>
-                  ></textarea>
                   {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
                 </div>
                 
