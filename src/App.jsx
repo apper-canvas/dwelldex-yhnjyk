@@ -85,6 +85,7 @@ function App() {
               className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
             >
               Contact
+            </Link>
             <Link 
               to="/add-listing" 
               className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
@@ -93,8 +94,6 @@ function App() {
                 <PlusIcon className="h-4 w-4" />
                 <span>Add Listing</span>
               </div>
-            </Link>
-
             </Link>
           </nav>
           
@@ -134,8 +133,7 @@ function App() {
                   )}
                 </motion.div>
               </AnimatePresence>
-            
-            {/* Mobile Menu Button */}
+            </button>
             <button 
               className="md:hidden p-2 rounded-full bg-surface-100 dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors duration-200"
               aria-label="Open menu"
@@ -143,8 +141,6 @@ function App() {
               <motion.div whileTap={{ scale: 0.9 }}>
                 <MenuIcon className="h-5 w-5 text-surface-600 dark:text-surface-400" />
               </motion.div>
-            </button>
-            
             </button>
           </div>
         </div>
