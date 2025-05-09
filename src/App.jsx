@@ -6,6 +6,7 @@ import getIcon from './utils/iconUtils';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Testimonials from './pages/Testimonials';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 
@@ -79,6 +80,7 @@ function App() {
           <Route path="/" element={<Home toast={toast} />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact toast={toast} />} />
+          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -96,6 +98,7 @@ function App() {
               <Link to="/about" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">About</Link>
               <Link to="/contact" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">Contact</Link>
               <Link to="/privacy" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">Privacy</Link>
+              <Link to="/testimonials" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">Testimonials</Link>
             </div>
           </div>
         </div>
