@@ -10,6 +10,7 @@ const TreePineIcon = getIcon('Palmtree');
 const HeartPulseIcon = getIcon('HeartPulse');
 const CarIcon = getIcon('Car');
 const BusIcon = getIcon('Bus');
+const BikeIcon = getIcon('Bike');
 const TrainIcon = getIcon('Train');
 const UmbrellaIcon = getIcon('Umbrella');
 const UserIcon = getIcon('User');
@@ -329,7 +330,7 @@ function LocalityInsights() {
                   </div>
                 </div>
                 <div className={`card p-4 flex items-center ${selectedNeighborhood.transit.bikeLanes ? 'bg-green-50 dark:bg-green-900/20' : 'bg-surface-100 dark:bg-surface-800'}`}>
-                  <BusIcon className={`w-5 h-5 mr-3 ${selectedNeighborhood.transit.bikeLanes ? 'text-green-500' : 'text-surface-400'}`} />
+                  <BikeIcon className={`w-5 h-5 mr-3 ${selectedNeighborhood.transit.bikeLanes ? 'text-green-500' : 'text-surface-400'}`} />
                   <div>
                     <div className="font-medium">Bike Lanes</div>
                     <div className="text-sm text-surface-500 dark:text-surface-400">
