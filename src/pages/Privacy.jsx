@@ -318,9 +318,8 @@ function Privacy() {
             <p className="text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
               Your privacy is important to us. This Privacy Policy explains how DwellDex collects, uses, and safeguards your information when you use our services.
             </p>
-            </motion.div>
           </motion.div>
-        </div>
+        </div>  
       </section>
 
       {/* Privacy Content */}
