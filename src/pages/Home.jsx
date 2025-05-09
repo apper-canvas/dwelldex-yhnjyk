@@ -318,6 +318,124 @@ function Home({ toast }) {
       </section>
 
       {/* Testimonials Section */}
+      <section className="py-16 bg-surface-50 dark:bg-surface-900">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
+            <h2 className="text-2xl font-bold mb-4 md:mb-0">
+              Featured Properties
+            </h2>
+            <div className="text-surface-600 dark:text-surface-400">
+              Showing {filteredProperties.length} properties
+            </div>
+          </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="property-card animate-pulse">
+                  <div className="h-48 bg-surface-200 dark:bg-surface-700 rounded-t-xl"></div>
+                  <div className="p-4">
+                    <div className="h-6 bg-surface-200 dark:bg-surface-700 rounded-full w-3/4 mb-3"></div>
+                    <div className="h-4 bg-surface-200 dark:bg-surface-700 rounded-full w-1/2 mb-4"></div>
+                    <div className="h-10 bg-surface-200 dark:bg-surface-700 rounded-lg mb-3"></div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="h-8 bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
+                      <div className="h-8 bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
+                      <div className="h-8 bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : filteredProperties.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProperties.map((property) => (
+                <motion.div
+                  key={property.id}
+                  className="property-card relative group"
+                  whileHover={{ y: -5 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {property.featured && (
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="badge-primary">Featured</span>
+                    </div>
+                  )}
+                  
+                  <div className="relative h-48 overflow-hidden rounded-t-xl">
+                    <img 
+                      src={property.image} 
+                      alt={property.title} 
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <button 
+                      onClick={() => toggleFavorite(property.id)}
+                      className="absolute top-4 right-4 p-2 rounded-full bg-white/80 backdrop-blur-sm dark:bg-surface-800/80 hover:bg-white dark:hover:bg-surface-700 transition-colors"
+                    >
+                      <HeartIcon className="h-5 w-5 text-surface-400 hover:text-red-500" />
+                    </button>
+                  </div>
+                  
+                  <div className="p-5">
+                    <div className="mb-2 flex items-center gap-1 text-sm text-surface-500 dark:text-surface-400">
+                      <MapPinIcon className="h-4 w-4" />
+                      <span>{property.location}</span>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold mb-2">{property.title}</h3>
+                    
+                    <div className="text-xl font-bold text-primary dark:text-primary-light mb-4">
+                      {formatPrice(property.price)}
+                    </div>
+                    
+                    <div className="grid grid-cols-3 gap-2 mb-5">
+                      <div className="flex items-center gap-1 text-sm text-surface-600 dark:text-surface-400">
+                        <BedDoubleIcon className="h-4 w-4" />
+                        <span>{property.bedrooms} Beds</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-sm text-surface-600 dark:text-surface-400">
+                        <BathIcon className="h-4 w-4" />
+                        <span>{property.bathrooms} Baths</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-sm text-surface-600 dark:text-surface-400">
+                        <RulerIcon className="h-4 w-4" />
+                        <span>{property.area} sqft</span>
+                      </div>
+                    </div>
+                    
+                    <button 
+                      className="w-full btn-primary"
+                      onClick={() => navigate(`/property/${property.id}`)}
+                    >
+                      View Details</button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="inline-block p-4 rounded-full bg-surface-100 dark:bg-surface-800 mb-4">
+                <SearchIcon className="h-8 w-8 text-surface-400" />
+              </div>
+              <h3 className="text-xl font-medium mb-2">No properties found</h3>
+              <p className="text-surface-600 dark:text-surface-400">
+                Try adjusting your search or filter criteria
+              </p>
+            </div>
+          )}
+
+          {filteredProperties.length > 0 && (
+            <div className="mt-12 text-center">
+              <button className="btn-outline">
+                Load More Properties
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
       <section className="py-10 bg-white dark:bg-surface-900">
         <div className="container mx-auto px-4">
           <motion.div
@@ -451,125 +569,6 @@ function Home({ toast }) {
               </svg>
             </a>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Property Listings */}
-      <section className="py-16 bg-surface-50 dark:bg-surface-900">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
-            <h2 className="text-2xl font-bold mb-4 md:mb-0">
-              Featured Properties
-            </h2>
-            <div className="text-surface-600 dark:text-surface-400">
-              Showing {filteredProperties.length} properties
-            </div>
-          </div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="property-card animate-pulse">
-                  <div className="h-48 bg-surface-200 dark:bg-surface-700 rounded-t-xl"></div>
-                  <div className="p-4">
-                    <div className="h-6 bg-surface-200 dark:bg-surface-700 rounded-full w-3/4 mb-3"></div>
-                    <div className="h-4 bg-surface-200 dark:bg-surface-700 rounded-full w-1/2 mb-4"></div>
-                    <div className="h-10 bg-surface-200 dark:bg-surface-700 rounded-lg mb-3"></div>
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="h-8 bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
-                      <div className="h-8 bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
-                      <div className="h-8 bg-surface-200 dark:bg-surface-700 rounded-lg"></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : filteredProperties.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProperties.map((property) => (
-                <motion.div
-                  key={property.id}
-                  className="property-card relative group"
-                  whileHover={{ y: -5 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  {property.featured && (
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="badge-primary">Featured</span>
-                    </div>
-                  )}
-                  
-                  <div className="relative h-48 overflow-hidden rounded-t-xl">
-                    <img 
-                      src={property.image} 
-                      alt={property.title} 
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <button 
-                      onClick={() => toggleFavorite(property.id)}
-                      className="absolute top-4 right-4 p-2 rounded-full bg-white/80 backdrop-blur-sm dark:bg-surface-800/80 hover:bg-white dark:hover:bg-surface-700 transition-colors"
-                    >
-                      <HeartIcon className="h-5 w-5 text-surface-400 hover:text-red-500" />
-                    </button>
-                  </div>
-                  
-                  <div className="p-5">
-                    <div className="mb-2 flex items-center gap-1 text-sm text-surface-500 dark:text-surface-400">
-                      <MapPinIcon className="h-4 w-4" />
-                      <span>{property.location}</span>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold mb-2">{property.title}</h3>
-                    
-                    <div className="text-xl font-bold text-primary dark:text-primary-light mb-4">
-                      {formatPrice(property.price)}
-                    </div>
-                    
-                    <div className="grid grid-cols-3 gap-2 mb-5">
-                      <div className="flex items-center gap-1 text-sm text-surface-600 dark:text-surface-400">
-                        <BedDoubleIcon className="h-4 w-4" />
-                        <span>{property.bedrooms} Beds</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-surface-600 dark:text-surface-400">
-                        <BathIcon className="h-4 w-4" />
-                        <span>{property.bathrooms} Baths</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-surface-600 dark:text-surface-400">
-                        <RulerIcon className="h-4 w-4" />
-                        <span>{property.area} sqft</span>
-                      </div>
-                    </div>
-                    
-                    <button 
-                      className="w-full btn-primary"
-                      onClick={() => navigate(`/property/${property.id}`)}
-                    >
-                      View Details</button>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <div className="inline-block p-4 rounded-full bg-surface-100 dark:bg-surface-800 mb-4">
-                <SearchIcon className="h-8 w-8 text-surface-400" />
-              </div>
-              <h3 className="text-xl font-medium mb-2">No properties found</h3>
-              <p className="text-surface-600 dark:text-surface-400">
-                Try adjusting your search or filter criteria
-              </p>
-            </div>
-          )}
-
-          {filteredProperties.length > 0 && (
-            <div className="mt-12 text-center">
-              <button className="btn-outline">
-                Load More Properties
-              </button>
-            </div>
-          )}
         </div>
       </section>
 
