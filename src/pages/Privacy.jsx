@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import getIcon from '../utils/iconUtils';
 
 function Privacy() {
@@ -16,6 +17,9 @@ function Privacy() {
   const LockIcon = getIcon('Lock');
   const RefreshCwIcon = getIcon('RefreshCw');
 
+  // Track progress
+  const [progress, setProgress] = useState(0);
+
   // Privacy sections
   const sections = [
     { id: 'collection', title: 'Information Collection', icon: <DatabaseIcon className="h-5 w-5" /> },
@@ -28,12 +32,32 @@ function Privacy() {
     { id: 'contact', title: 'Contact Us', icon: <AlertCircleIcon className="h-5 w-5" /> }
   ];
 
+  // Calculate progress when active section changes
+  useEffect(() => {
+    const currentIndex = sections.findIndex(section => section.id === activeSection);
+    if (currentIndex >= 0) {
+      const newProgress = ((currentIndex + 1) / sections.length) * 100;
+      setProgress(newProgress);
+    }
+  }, [activeSection]);
+
   const handlePrint = () => {
     window.print();
   };
 
+  // Helper function to navigate between sections
+  const navigateSection = (direction) => {
+    const currentIndex = sections.findIndex(section => section.id === activeSection);
+    if (direction === 'next' && currentIndex < sections.length - 1) {
+      setActiveSection(sections[currentIndex + 1].id);
+    } else if (direction === 'prev' && currentIndex > 0) {
+      setActiveSection(sections[currentIndex - 1].id);
+    }
+  };
+
   const sectionContent = {
     collection: (
+      <div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">Information We Collect</h3>
         <p className="mb-4">
@@ -57,8 +81,15 @@ function Privacy() {
           We collect information through direct interactions, automated technologies, and occasionally from third parties.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1508830524289-0adcbe822b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+          alt="Data collection visualization" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     ),
-    use: (
+    use: (<div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">How We Use Your Information</h3>
         <p className="mb-4">
@@ -78,8 +109,15 @@ function Privacy() {
           We process your information based on legitimate interests, consent, contractual necessity, or legal obligations.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+          alt="Data analysis and usage" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     ),
-    sharing: (
+    sharing: (<div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">Information Sharing</h3>
         <p className="mb-4">
@@ -103,8 +141,15 @@ function Privacy() {
           We do not sell your personal information to third parties for advertising purposes.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+          alt="Secure information sharing" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     ),
-    cookies: (
+    cookies: (<div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">Cookies & Tracking Technologies</h3>
         <p className="mb-4">
@@ -124,8 +169,15 @@ function Privacy() {
           We work with analytics providers like Google Analytics to understand how users interact with our platform. These providers may collect information about your online activities across different websites.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1576859958469-b4321d750385?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+          alt="Cookies and web tracking" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     ),
-    security: (
+    security: (<div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">Data Security</h3>
         <p className="mb-4">
@@ -142,8 +194,15 @@ function Privacy() {
           While we strive to use commercially acceptable means to protect your personal information, no method of transmission over the Internet or electronic storage is 100% secure. We cannot guarantee absolute security.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1562813733-b31f71025d54?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+          alt="Data security and encryption" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     ),
-    rights: (
+    rights: (<div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">Your Privacy Rights</h3>
         <p className="mb-4">
@@ -162,8 +221,15 @@ function Privacy() {
           To exercise these rights, please contact us at privacy@dwelldex.com. We will respond to your request within the timeframe required by applicable law.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1633265486501-0cf524a07213?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+          alt="Privacy rights and protections" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     ),
-    updates: (
+    updates: (<div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">Privacy Policy Updates</h3>
         <p className="mb-4">
@@ -178,8 +244,15 @@ function Privacy() {
           The "Last Updated" date at the top of this Privacy Policy indicates when it was last revised. We encourage you to review this policy periodically to stay informed about how we protect your information.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1561736778-92e52a7769ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+          alt="Policy updates and notifications" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     ),
-    contact: (
+    contact: (<div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-4">Contact Us About Privacy</h3>
         <p className="mb-4">
@@ -194,6 +267,13 @@ function Privacy() {
           If you have an unresolved privacy concern that we have not addressed satisfactorily, please contact your local data protection authority.
         </p>
       </div>
+      <div className="mt-8 rounded-xl overflow-hidden shadow-lg print:hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" 
+          alt="Contact and support team" 
+          className="w-full h-64 object-cover object-center" />
+      </div>
+      </div>
     )
   };
 
@@ -202,7 +282,7 @@ function Privacy() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary/10 to-surface-100 dark:from-primary/5 dark:to-surface-800 py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -212,13 +292,23 @@ function Privacy() {
             <p className="text-lg md:text-xl text-surface-600 dark:text-surface-400 mb-8">
               Last Updated: May 15, 2023
             </p>
-            <div className="inline-flex items-center justify-center p-4 rounded-full bg-primary/10 dark:bg-primary/20 text-primary mb-4 print:hidden">
-              <ShieldIcon className="h-8 w-8" />
+            <div className="relative inline-block mb-8 print:hidden">
+              <div className="w-24 h-24 relative mx-auto mb-4 rounded-full overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1579873542555-28b445e1d65d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+                  alt="Privacy Shield" 
+                  className="w-full h-full object-cover" 
+                />
+                <div className="absolute inset-0 bg-primary/30 flex items-center justify-center">
+                  <ShieldIcon className="h-12 w-12 text-white" />
+                </div>
+              </div>
             </div>
-            <p className="text-surface-600 dark:text-surface-400">
+            <p className="text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
               Your privacy is important to us. This Privacy Policy explains how DwellDex collects, uses, and safeguards your information when you use our services.
             </p>
             <button
+              type="button"
               onClick={handlePrint}
               className="mt-8 inline-flex items-center px-4 py-2 bg-white dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm hover:bg-surface-50 dark:hover:bg-surface-600 transition-colors print:hidden"
               aria-label="Print Privacy Policy"
@@ -239,27 +329,64 @@ function Privacy() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 print:grid-cols-1 print:gap-0">
             {/* Navigation Sidebar */}
             <div className="lg:sticky lg:top-20 h-fit print:hidden">
-              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-4 print:shadow-none">
-                <h3 className="font-bold text-lg mb-4">Privacy Policy Contents</h3>
-                <nav>
-                  <ul className="space-y-1">
-                    {sections.map((section) => (
-                      <li key={section.id}>
-                        <button 
-                          onClick={() => setActiveSection(section.id)}
-                          className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors ${
-                            activeSection === section.id
-                              ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light'
-                              : 'hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
-                          }`}
-                        >
-                          {section.icon}
-                          <span>{section.title}</span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-card dark:shadow-none border border-surface-200 dark:border-surface-700 overflow-hidden p-5 print:shadow-none">
+                <div className="mb-5 border-b border-surface-200 dark:border-surface-700 pb-4">
+                  <h3 className="font-bold text-xl mb-3 text-surface-900 dark:text-surface-100">Privacy Guide</h3>
+                  <div className="w-full bg-surface-200 dark:bg-surface-700 h-2 rounded-full overflow-hidden">
+                    <div 
+                      className="bg-primary h-full rounded-full transition-all duration-300 ease-out"
+                      style={{ width: `${progress}%` }}
+                    ></div>
+                  </div>
+                  <p className="mt-2 text-sm text-surface-500 dark:text-surface-400">
+                    {Math.round(progress)}% of policy reviewed
+                  </p>
+                </div>
+                
+                <div className="mb-4">
+                  <h4 className="text-surface-600 dark:text-surface-400 uppercase text-xs font-bold tracking-wider mb-3">
+                    Navigate Policy
+                  </h4>
+                  <nav>
+                    <ul className="space-y-2">
+                      {sections.map((section, index) => (
+                        <li key={section.id}>
+                          <button 
+                            type="button"
+                            onClick={() => setActiveSection(section.id)}
+                            className={`w-full text-left px-3 py-2.5 rounded-lg flex items-center gap-3 transition-all ${
+                              activeSection === section.id
+                                ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light font-medium'
+                                : 'hover:bg-surface-100 dark:hover:bg-surface-700 text-surface-700 dark:text-surface-300'
+                            }`}
+                          >
+                            <div className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full ${
+                              activeSection === section.id 
+                                ? 'bg-primary/20 dark:bg-primary/30 text-primary dark:text-primary-light' 
+                                : 'bg-surface-200 dark:bg-surface-700 text-surface-600 dark:text-surface-400'
+                            }`}>
+                              {section.icon}
+                            </div>
+                            <span>{section.title}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                </div>
+                
+                <div className="flex justify-between mt-6 pt-4 border-t border-surface-200 dark:border-surface-700">
+                  <button
+                    type="button"
+                    onClick={() => navigateSection('prev')}
+                    className="px-3 py-1.5 text-sm text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={sections.findIndex(section => section.id === activeSection) === 0}>Previous</button>
+                  <button
+                    type="button"
+                    onClick={() => navigateSection('next')}
+                    className="px-3 py-1.5 text-sm text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={sections.findIndex(section => section.id === activeSection) === sections.length - 1}>Next</button>
+                </div>
               </div>
             </div>
             {/* Content Area */} 
@@ -273,7 +400,7 @@ function Privacy() {
                   key={activeSection}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.4 }}
                 >
                   {sectionContent[activeSection]}
                   
