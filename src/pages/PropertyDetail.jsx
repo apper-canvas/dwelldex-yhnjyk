@@ -10,6 +10,14 @@ function PropertyDetail({ toast }) {
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
   const [similarProperties, setSimilarProperties] = useState([]);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [requestFormData, setRequestFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
 
   // Reviews state
   const [reviews, setReviews] = useState([]);
@@ -46,6 +54,8 @@ function PropertyDetail({ toast }) {
   const ClipboardEditIcon = getIcon('ClipboardEdit');
   const SendIcon = getIcon('Send');
   const XIcon = getIcon('X');
+  const UserIcon = getIcon('User');
+  const AtSignIcon = getIcon('AtSign');
 
   // Dummy property data
   const dummyProperties = [
@@ -392,8 +402,74 @@ function PropertyDetail({ toast }) {
     toast.info("Share link copied to clipboard!");
   };
 
+  const handleRequestFormChange = (e) => {
+    const { name, value } = e.target;
+    setRequestFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const validateRequestForm = () => {
+    let isValid = true;
+    
+    // Basic validation checks
+    if (!requestFormData.name.trim()) {
+      toast.error("Please enter your name");
+      isValid = false;
+    }
+    
+    if (!requestFormData.email.trim()) {
+      toast.error("Please enter your email");
+      isValid = false;
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(requestFormData.email)) {
+      toast.error("Please enter a valid email address");
+      isValid = false;
+    }
+    
+    if (!requestFormData.phone.trim()) {
+      toast.error("Please enter your phone number");
+      isValid = false;
+    }
+    
+    if (!requestFormData.message.trim()) {
+      toast.error("Please enter a message");
+      isValid = false;
+    }
+    
+    return isValid;
+  };
+
+  const handleSubmitRequestForm = (e) => {
+    e.preventDefault();
+    
+    if (validateRequestForm()) {
+      // Show success message
+      setShowSuccessMessage(true);
+      setShowRequestForm(false);
+      
+      // Clear form data
+      setRequestFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+      
+      toast.success("Your request has been sent to the agent!");
+      
+      // Reset to button after 5 seconds
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
+    }
+  };
+
   const handleContactAgent = () => {
-    toast.success("Your request has been sent to the agent!");
+    // Toggle the form visibility when the button is clicked
+    if (!showSuccessMessage) {
+      setShowRequestForm(!showRequestForm);
+    }
   };
 
   // Calculate average rating
@@ -929,12 +1005,113 @@ function PropertyDetail({ toast }) {
                   </div>
                 </div>
                 
-                <button 
-                  onClick={handleContactAgent}
-                  className="w-full btn-primary"
-                >
-                  Request Information
+                {showSuccessMessage ? (
+                  <div className="w-full rounded-lg bg-green-100 dark:bg-green-900 p-4 text-center">
+                    <CheckIcon className="h-6 w-6 text-green-600 dark:text-green-400 mx-auto mb-2" />
+                    <p className="text-green-700 dark:text-green-300 font-medium">
+                      Thank you! Your request has been sent successfully.
+                    </p>
+                  </div>
+                ) : showRequestForm ? (
+                  <div className="border border-surface-200 dark:border-surface-700 rounded-lg p-4">
+                    <div className="flex justify-between items-center mb-4">
+                      <h4 className="font-bold">Request Property Information</h4>
+                      <button
+                        onClick={() => setShowRequestForm(false)}
+                        className="p-1 rounded-full hover:bg-surface-200 dark:hover:bg-surface-600"
+                      >
+                        <XIcon className="h-5 w-5" />
+                      </button>
+                    </div>
+                    
+                    <form onSubmit={handleSubmitRequestForm} className="space-y-4">
+                      <div>
+                        <label htmlFor="name" className="block mb-1 text-sm font-medium text-surface-700 dark:text-surface-300">
+                          Your Name*
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <UserIcon className="h-4 w-4 text-surface-400" />
+                          </div>
+                          <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={requestFormData.name}
+                            onChange={handleRequestFormChange}
+                            className="pl-10 w-full rounded-lg border border-surface-300 dark:border-surface-600 p-2 text-sm bg-white dark:bg-surface-700 focus:ring-2 focus:ring-primary dark:focus:ring-primary-light focus:border-transparent outline-none"
+                            placeholder="John Doe"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="email" className="block mb-1 text-sm font-medium text-surface-700 dark:text-surface-300">
+                          Your Email*
+                        </label>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <AtSignIcon className="h-4 w-4 text-surface-400" />
+                          </div>
+                          <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={requestFormData.email}
+                            onChange={handleRequestFormChange}
+                            className="pl-10 w-full rounded-lg border border-surface-300 dark:border-surface-600 p-2 text-sm bg-white dark:bg-surface-700 focus:ring-2 focus:ring-primary dark:focus:ring-primary-light focus:border-transparent outline-none"
+                            placeholder="john@example.com"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="phone" className="block mb-1 text-sm font-medium text-surface-700 dark:text-surface-300">
+                          Phone Number*
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          value={requestFormData.phone}
+                          onChange={handleRequestFormChange}
+                          className="w-full rounded-lg border border-surface-300 dark:border-surface-600 p-2 text-sm bg-white dark:bg-surface-700 focus:ring-2 focus:ring-primary dark:focus:ring-primary-light focus:border-transparent outline-none"
+                          placeholder="(123) 456-7890"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="message" className="block mb-1 text-sm font-medium text-surface-700 dark:text-surface-300">
+                          Your Message*
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          value={requestFormData.message}
+                          onChange={handleRequestFormChange}
+                          rows="3"
+                          className="w-full rounded-lg border border-surface-300 dark:border-surface-600 p-2 text-sm bg-white dark:bg-surface-700 focus:ring-2 focus:ring-primary dark:focus:ring-primary-light focus:border-transparent outline-none"
+                          placeholder="I'm interested in this property and would like more information..."
+                        ></textarea>
+                      </div>
+                      
+                      <button
+                        type="submit"
+                        className="w-full btn-primary flex items-center justify-center gap-2"
+                      >
+                        <SendIcon className="h-4 w-4" />
+                        Send Request
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={handleContactAgent}
+                    className="w-full btn-primary"
+                  >
+                    Request Information
                 </button>
+                )}
               </div>
               
               <div className="border-t border-surface-200 dark:border-surface-700 pt-6">
