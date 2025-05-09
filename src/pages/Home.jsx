@@ -14,6 +14,8 @@ function Home({ toast }) {
   // Icon component declarations
   const SearchIcon = getIcon('Search');
   const HomeIcon = getIcon('Home');
+  const StarIcon = getIcon('Star');
+  const StarFilledIcon = getIcon('StarFilled');
   const BuildingIcon = getIcon('Building');
   const DollarSignIcon = getIcon('DollarSign');
   const BedDoubleIcon = getIcon('BedDouble');
@@ -21,6 +23,7 @@ function Home({ toast }) {
   const RulerIcon = getIcon('Ruler');
   const MapPinIcon = getIcon('MapPin');
   const HeartIcon = getIcon('Heart');
+  const QuoteIcon = getIcon('Quote');
 
   // Dummy property data
   const dummyProperties = [
@@ -95,6 +98,8 @@ function Home({ toast }) {
 
   useEffect(() => {
     // Simulate data loading
+    // Set page title
+    document.title = 'DwellDex - Find Your Dream Home';
     const timer = setTimeout(() => {
       setProperties(dummyProperties);
       setIsLoading(false);
@@ -120,6 +125,59 @@ function Home({ toast }) {
   const formatPrice = (price) => {
     return "$" + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+
+  // Helper function to render star ratings
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(
+          <StarFilledIcon 
+            key={i} 
+            className="w-5 h-5 text-secondary" 
+            aria-hidden="true" 
+          />
+        );
+      } else {
+        stars.push(
+          <StarIcon 
+            key={i} 
+            className="w-5 h-5 text-surface-300 dark:text-surface-600" 
+            aria-hidden="true" 
+          />
+        );
+      }
+    }
+    return stars;
+  };
+
+  // Testimonial data
+  const testimonials = [
+    {
+      id: 1,
+      name: "Sarah Johnson",
+      role: "First-time Homebuyer",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+      rating: 5,
+      testimonial: "DwellDex made finding my first home so much easier than I expected. The interface is intuitive, and I was able to filter properties based on exactly what I was looking for. Highly recommend!"
+    },
+    {
+      id: 2,
+      name: "Michael Chen",
+      role: "Real Estate Investor",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+      rating: 4,
+      testimonial: "As someone who regularly invests in properties, I need a reliable platform. DwellDex provides comprehensive data that helps me make informed decisions quickly. It's become an essential tool for my business."
+    },
+    {
+      id: 3,
+      name: "Elena Rodriguez",
+      role: "Property Manager",
+      image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80",
+      rating: 5,
+      testimonial: "The rental management features are outstanding. I can keep track of multiple properties, tenant communications, and maintenance requests all in one place. It's simplified my workflow tremendously."
+    }
+  ];
 
   return (
     <div>
@@ -257,6 +315,75 @@ function Home({ toast }) {
         <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
         <div className="absolute top-1/4 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -z-10"></div>
         <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-16 bg-white dark:bg-surface-900">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold mb-4">What Our Clients Say</h2>
+            <p className="text-lg text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
+              Discover why thousands of homebuyers and property investors trust DwellDex to help them make informed real estate decisions.
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * index }}
+                className="card p-6 flex flex-col h-full relative"
+              >
+                <div className="absolute text-primary/10 dark:text-primary/20 top-4 right-4">
+                  <QuoteIcon className="w-8 h-8" />
+                </div>
+                
+                <div className="flex items-center mb-4">
+                  <div className="w-14 h-14 rounded-full overflow-hidden mr-4 border-2 border-white dark:border-surface-700 shadow-sm">
+                    <img 
+                      src={testimonial.image} 
+                      alt={testimonial.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-surface-900 dark:text-white">{testimonial.name}</p>
+                    <p className="text-sm text-surface-500 dark:text-surface-400">{testimonial.role}</p>
+                  </div>
+                </div>
+                
+                <div className="flex mb-3">
+                  {renderStars(testimonial.rating)}
+                </div>
+                
+                <blockquote className="flex-1 text-surface-700 dark:text-surface-300">
+                  <p className="italic">"{testimonial.testimonial}"</p>
+                </blockquote>
+              </motion.div>
+            ))}
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-10 flex justify-center"
+          >
+            <a href="/testimonials" className="flex items-center text-primary hover:text-primary-dark dark:hover:text-primary-light transition-colors font-medium">
+              <span>View all testimonials</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </a>
+          </motion.div>
+        </div>
       </section>
 
       {/* Property Listings */}
