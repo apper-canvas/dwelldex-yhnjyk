@@ -175,7 +175,7 @@ function PropertyDetail({ toast }) {
   // Dummy reviews data
   const dummyReviews = [
     {
-      id: 101,
+      id: 1001,
       propertyId: 1,
       name: "Michael Brown",
       avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
@@ -184,7 +184,7 @@ function PropertyDetail({ toast }) {
       comment: "Absolutely stunning property with incredible views! The villa exceeded all our expectations with its modern design and luxurious amenities. The waterfront location is breathtaking, especially at sunset. Everything was immaculate upon our arrival and the management team was responsive and professional."
     },
     {
-      id: 102,
+      id: 1002,
       propertyId: 1,
       name: "Jennifer Wilson",
       avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
@@ -193,7 +193,25 @@ function PropertyDetail({ toast }) {
       comment: "We had a wonderful stay at this beautiful villa. The location is perfect - close to restaurants and shopping while still feeling private and secluded. The kitchen was well-equipped and the bedrooms were comfortable. My only suggestion would be to update some of the outdoor furniture. Overall, a great experience and we would definitely return!"
     },
     {
-      id: 103,
+      id: 1003,
+      propertyId: 1,
+      name: "David Thompson",
+      avatar: "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-11-05",
+      ratings: { overall: 3, location: 5, cleanliness: 2, amenities: 3, value: 2 },
+      comment: "The location and views are undeniably spectacular, but I'm disappointed with the cleanliness and maintenance. Several appliances weren't working properly, and we found dust in many areas. The price point seems excessive considering these issues. While the design is beautiful, I expected better attention to detail for this premium property."
+    },
+    {
+      id: 1004,
+      propertyId: 1,
+      name: "Amanda Rodriguez",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2024-01-18",
+      ratings: { overall: 4, location: 5, cleanliness: 4, amenities: 5, value: 3 },
+      comment: "We enjoyed our time at this stunning waterfront villa with its breathtaking views and excellent amenities. The open floor plan and floor-to-ceiling windows create an amazing sense of space and connection to the surroundings. However, I must note the premium price tag makes it less accessible for longer stays. The property management was responsive and helpful throughout our visit."
+    },
+    {
+      id: 2001,
       propertyId: 2,
       name: "Robert Taylor",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
@@ -202,13 +220,130 @@ function PropertyDetail({ toast }) {
       comment: "Perfect location in the heart of Manhattan! The apartment was exactly as pictured - modern, clean, and well-appointed. The building amenities were fantastic, especially the rooftop terrace with amazing city views. Highly recommend for anyone wanting a luxury stay in NYC."
     },
     {
-      id: 104,
+      id: 2002,
+      propertyId: 2,
+      name: "Emily Chen",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-10-12",
+      ratings: { overall: 3, location: 5, cleanliness: 3, amenities: 3, value: 2 },
+      comment: "The location is truly unbeatable - walking distance to everything you need in Manhattan. However, the apartment is much smaller than it appears in photos, and the noise from the street is quite disruptive at night. For the price point, I expected more space and better soundproofing. The doorman and building staff were helpful and friendly."
+    },
+    {
+      id: 2003,
+      propertyId: 2,
+      name: "James Wilson",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2024-02-07",
+      ratings: { overall: 4, location: 5, cleanliness: 4, amenities: 4, value: 3 },
+      comment: "This apartment offers the quintessential Manhattan experience with its prime location and impressive city views. The fitness center and rooftop terrace add significant value to the property. I found the space adequate though somewhat tight for entertaining guests. While expensive, it's relatively fair for the neighborhood and the luxury amenities provided."
+    },
+    {
+      id: 3001,
       propertyId: 3,
       name: "Lisa Martinez",
       avatar: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
       date: "2023-10-05",
       ratings: { overall: 5, location: 5, cleanliness: 5, amenities: 5, value: 5 },
       comment: "This mountain cabin is a dream come true! The location is serene and the views are spectacular. We loved waking up each morning to see the mountains right outside our window. The interior is rustic yet comfortable, and the fireplace made our evenings so cozy. Perfect for a retreat from city life."
+    },
+    {
+      id: 3002,
+      propertyId: 3,
+      name: "Thomas Miller",
+      avatar: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-12-18",
+      ratings: { overall: 3, location: 5, cleanliness: 2, amenities: 3, value: 3 },
+      comment: "The mountain views and location are absolutely incredible - you can't beat the serenity and natural beauty surrounding this cabin. Unfortunately, the interiors need significant updating, with worn furniture and dated appliances. The bathroom showed signs of mold and the heating system was inconsistent. Great potential but needs maintenance and modernization."
+    },
+    {
+      id: 3003,
+      propertyId: 3,
+      name: "Sarah Johnson",
+      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2024-01-02",
+      ratings: { overall: 4, location: 5, cleanliness: 4, amenities: 3, value: 4 },
+      comment: "We spent a wonderful winter week at this charming cabin, which offers the perfect balance of rustic atmosphere and essential comforts. The stone fireplace and wood-burning stove kept us warm during snowy evenings. While the kitchen could use some updates, it was functional for preparing meals. The hiking trails and proximity to nature make this property worth every penny."
+    },
+    {
+      id: 4001,
+      propertyId: 4,
+      name: "Christopher Lee",
+      avatar: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-08-15",
+      ratings: { overall: 5, location: 5, cleanliness: 5, amenities: 5, value: 4 },
+      comment: "This condo exceeded all my expectations with its stunning views of Seattle and immaculate design. Floor-to-ceiling windows bring in abundant natural light and showcase the city skyline and water views. The building amenities, especially the rooftop lounge, offer an exceptional urban living experience. The location is perfect - walking distance to great restaurants and shopping."
+    },
+    {
+      id: 4002,
+      propertyId: 4,
+      name: "Michelle Davis",
+      avatar: "https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-11-20",
+      ratings: { overall: 3, location: 4, cleanliness: 3, amenities: 3, value: 2 },
+      comment: "The views from this condo are indeed spectacular, but the constant noise from traffic and nearby construction was disruptive. The unit is smaller than it appears in photos, making it feel somewhat cramped for two people. While the building amenities are nice, several were closed for maintenance during our stay. Good location but overpriced for what you get."
+    },
+    {
+      id: 4003,
+      propertyId: 4,
+      name: "Daniel Jackson",
+      avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2024-02-10",
+      ratings: { overall: 4, location: 5, cleanliness: 4, amenities: 4, value: 3 },
+      comment: "This modern condo offers a well-designed space with spectacular views through its floor-to-ceiling windows. The quartz countertops and high-end appliances make cooking a pleasure. The concierge service is helpful, though sometimes slow to respond. While the price is steep, the location and quality finishes make it a worthwhile investment for those seeking a premium Seattle experience."
+    },
+    {
+      id: 5001,
+      propertyId: 5,
+      name: "Rebecca Williams",
+      avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-07-05",
+      ratings: { overall: 5, location: 5, cleanliness: 4, amenities: 4, value: 5 },
+      comment: "This beachfront bungalow is absolute paradise! Falling asleep to the sound of waves and waking up to ocean views is an experience we'll never forget. The recent renovations have made this property both beautiful and comfortable. The spacious deck was perfect for morning coffee and sunset cocktails. Everything was clean and well-maintained, making our beach vacation perfect."
+    },
+    {
+      id: 5002,
+      propertyId: 5,
+      name: "Ryan Cooper",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-09-28",
+      ratings: { overall: 3, location: 5, cleanliness: 2, amenities: 3, value: 2 },
+      comment: "The location directly on the beach is unquestionably five-star, but the property itself doesn't live up to the premium price tag. We found sand everywhere despite supposedly being recently cleaned. The air conditioning was ineffective during hot afternoons. Several windows wouldn't close properly, creating a draft at night. The renovation seems focused on aesthetics rather than functionality."
+    },
+    {
+      id: 5003,
+      propertyId: 5,
+      name: "Jessica Taylor",
+      avatar: "https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-12-15",
+      ratings: { overall: 4, location: 5, cleanliness: 4, amenities: 3, value: 3 },
+      comment: "There's something magical about being steps away from the ocean, and this bungalow delivers that experience beautifully. The renovated kitchen is well-equipped, though some cabinets show signs of wear from the coastal environment. The outdoor shower is a thoughtful addition for rinsing off after beach time. While expensive, the location justifies much of the cost."
+    },
+    {
+      id: 6001,
+      propertyId: 6,
+      name: "Brian Anderson",
+      avatar: "https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-08-03",
+      ratings: { overall: 5, location: 4, cleanliness: 5, amenities: 5, value: 5 },
+      comment: "This urban loft is a design lover's dream with its exposed brick, soaring ceilings, and industrial charm. The conversion from warehouse to living space was executed brilliantly, preserving character while adding modern comforts. The kitchen is compact but well-designed, and the building amenities add significant value. Excellent price point for the space and style in Chicago."
+    },
+    {
+      id: 6002,
+      propertyId: 6,
+      name: "Olivia Martinez",
+      avatar: "https://images.unsplash.com/photo-1563306406-e66174fa3787?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2023-10-22",
+      ratings: { overall: 2, location: 3, cleanliness: 2, amenities: 3, value: 2 },
+      comment: "The industrial aesthetic looks great in photos but creates significant practical issues. The loft was extremely noisy - you can hear everything from neighboring units through the thin walls. The heating system is inefficient with the high ceilings, making winter stays uncomfortable. The bathroom fixtures were poorly installed with water pressure issues. Style over substance at a premium price."
+    },
+    {
+      id: 6003,
+      propertyId: 6,
+      name: "Kevin Wright",
+      avatar: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80",
+      date: "2024-01-15",
+      ratings: { overall: 4, location: 4, cleanliness: 4, amenities: 3, value: 4 },
+      comment: "This loft offers a quintessential Chicago urban living experience with its converted warehouse charm and architectural details. The large industrial windows provide excellent natural light throughout the day. While the open concept can make temperature regulation challenging, the space heater provided helped. The fitness center is small but adequate, and the neighborhood has everything you need within walking distance."
     }
   ];
 
