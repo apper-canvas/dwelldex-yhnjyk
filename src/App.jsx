@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import PropertyDetail from './pages/PropertyDetail';
+import LocalityInsights from './pages/LocalityInsights';
 import Testimonials from './pages/Testimonials';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
@@ -83,6 +84,7 @@ function App() {
           <Route path="/contact" element={<Contact toast={toast} />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/property/:id" element={<PropertyDetail toast={toast} />} />
+          <Route path="/locality-insights" element={<LocalityInsights />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -99,6 +101,7 @@ function App() {
             <div className="flex gap-6">
               <Link to="/about" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">About</Link>
               <Link to="/contact" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">Contact</Link>
+              <Link to="/locality-insights" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">Locality Insights</Link>
               <Link to="/privacy" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">Privacy</Link>
               <Link to="/testimonials" className="text-surface-600 dark:text-surface-400 hover:text-primary dark:hover:text-primary-light transition-colors">Testimonials</Link>
             </div>
