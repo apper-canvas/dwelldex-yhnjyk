@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
 
 function Home({ toast }) {
@@ -573,9 +572,6 @@ function Home({ toast }) {
       </section>
 
       {/* Main Feature Component */}
-      <MainFeature toast={toast} />
-
-      {/* Stats Section */}
       <section className="py-16 bg-gradient-to-br from-primary/5 to-surface-50 dark:from-primary/10 dark:to-surface-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
