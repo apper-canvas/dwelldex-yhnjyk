@@ -202,7 +202,7 @@ function Privacy() {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary/10 to-surface-100 dark:from-primary/5 dark:to-surface-800 py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -212,19 +212,19 @@ function Privacy() {
             <p className="text-lg md:text-xl text-surface-600 dark:text-surface-400 mb-8">
               Last Updated: May 15, 2023
             </p>
-            <div className="inline-flex items-center justify-center p-4 rounded-full bg-primary/10 dark:bg-primary/20 text-primary mb-4">
+            <div className="inline-flex items-center justify-center p-4 rounded-full bg-primary/10 dark:bg-primary/20 text-primary mb-4 print:hidden">
               <ShieldIcon className="h-8 w-8" />
             </div>
             <p className="text-surface-600 dark:text-surface-400">
               Your privacy is important to us. This Privacy Policy explains how DwellDex collects, uses, and safeguards your information when you use our services.
             </p>
-            <button 
+            <button
               onClick={handlePrint}
               className="mt-8 inline-flex items-center px-4 py-2 bg-white dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm hover:bg-surface-50 dark:hover:bg-surface-600 transition-colors print:hidden"
               aria-label="Print Privacy Policy"
             >
               <PrinterIcon className="h-5 w-5 mr-2 text-surface-600 dark:text-surface-400" />
-              <span className="text-surface-800 dark:text-surface-200 font-medium">
+              <span className="text-surface-800 dark:text-surface-200 font-medium print:hidden">
                 Print as PDF
               </span>
             </button>
@@ -245,7 +245,7 @@ function Privacy() {
                   <ul className="space-y-1">
                     {sections.map((section) => (
                       <li key={section.id}>
-                        <button
+                        <button 
                           onClick={() => setActiveSection(section.id)}
                           className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-2 transition-colors ${
                             activeSection === section.id
@@ -262,15 +262,15 @@ function Privacy() {
                 </nav>
               </div>
             </div>
-            
+            {/* Content Area */} 
             {/* Content Area */}
             <div className="lg:col-span-3 print:col-span-full">
               <div className="bg-white dark:bg-surface-800 rounded-xl shadow-neu-light dark:shadow-neu-dark p-6 md:p-8 print:shadow-none print:p-0 print:bg-white">
-                {/* Print-only all sections header */}
+                <div className="hidden print:block print:mb-4">
                 <div className="hidden print:block print:mb-8">
                   <h2 className="text-2xl font-bold mb-6 print:text-black">Complete Privacy Policy</h2>
                 </div>
-                <motion.div
+                  key={activeSection} 
                   key={activeSection}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -301,14 +301,14 @@ function Privacy() {
                       <div>
                         <p className="print:text-sm print:text-gray-600">
                           Last Updated: May 15, 2023
-                        </p>
+                        </p> 
                       </div>
                     </div>
                     <p className="print:text-sm print:text-gray-600 print:mt-2">
                       This document was printed on {new Date().toLocaleDateString()}
                     </p>
                     <p className="print:text-sm print:text-gray-600 print:mt-4">
-                      For the most up-to-date version of our Privacy Policy, please visit{" "}
+                      For the most up-to-date version of our Privacy Policy, please visit{" "} 
                       <span className="print:font-medium">
                         https://dwelldex.com/privacy
                       </span>

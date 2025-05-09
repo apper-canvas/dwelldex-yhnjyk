@@ -95,17 +95,57 @@
       font-size: 12pt;
     }
 
+    /* Hide decorative elements */
+    .print-hide,
+    .print\:hidden,
+    button:not(.print-show),
+    svg,
+    .bg-gradient-to-br,
+    nav {
+      display: none !important;
+    }
+
+    /* Remove all background colors and gradients */
+    * {
+      background: none !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      box-shadow: none !important;
+      border-color: #ddd !important;
+      color: black !important;
+    }
+
     /* Ensure content spreads across the page */
     .container {
       max-width: 100% !important;
       width: 100% !important;
       padding: 0 !important;
       margin: 0 !important;
+      display: block !important;
     }
 
     /* Remove any effects that don't print well */
     h1, h2, h3, h4, h5, h6 {
       color: black !important;
+      margin-top: 1.5em !important;
+      margin-bottom: 0.75em !important;
+      font-weight: bold !important;
+      text-align: left !important;
+    }
+
+    h1 {
+      font-size: 24pt !important;
+      margin-top: 0 !important;
+    }
+
+    h2 {
+      font-size: 18pt !important;
+    }
+
+    h3 {
+      font-size: 14pt !important;
+      border-bottom: 1px solid #ccc !important;
+      padding-bottom: 5px !important;
       page-break-after: avoid;
     }
 
@@ -113,9 +153,30 @@
       color: #333 !important;
     }
 
-    /* Add page breaks where appropriate */
+    /* Layout adjustments */
     section {
+      display: block !important;
       page-break-inside: avoid;
+    }
+
+    .grid,
+    .flex {
+      display: block !important;
+    }
+
+    /* Remove rounded corners and shadows */
+    .rounded-xl,
+    .rounded-lg,
+    .rounded-full {
+      border-radius: 0 !important;
+    }
+    
+    /* Hide motion animations */
+    .motion-div {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      animation: none !important;
     }
   }
 }
