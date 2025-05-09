@@ -10,6 +10,7 @@ import PropertyDetail from './pages/PropertyDetail';
 import LocalityInsights from './pages/LocalityInsights';
 import Testimonials from './pages/Testimonials';
 import Privacy from './pages/Privacy';
+import AddListing from './pages/AddListing';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
   const MenuIcon = getIcon('Menu');
   const MapIcon = getIcon('Map');
   const UserIcon = getIcon('User');
+  const PlusIcon = getIcon('Plus');
   const XIcon = getIcon('X');
 
   return (
@@ -83,6 +85,16 @@ function App() {
               className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
             >
               Contact
+            <Link 
+              to="/add-listing" 
+              className="text-surface-700 dark:text-surface-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+            >
+              <div className="flex items-center gap-1">
+                <PlusIcon className="h-4 w-4" />
+                <span>Add Listing</span>
+              </div>
+            </Link>
+
             </Link>
           </nav>
           
@@ -147,6 +159,7 @@ function App() {
           <Route path="/property/:id" element={<PropertyDetail toast={toast} />} />
           <Route path="/locality-insights" element={<LocalityInsights />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/add-listing" element={<AddListing toast={toast} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
