@@ -206,7 +206,7 @@ function MainFeature({ toast }) {
   return (
     <section className="py-16 bg-white dark:bg-surface-900">
       <div className="container mx-auto px-4">
-    <div></div>
+        {/* Main container */}
           
           {/* Progress steps */}
           <div className="mb-10">
@@ -784,7 +784,6 @@ function MainFeature({ toast }) {
             </form>
           </div>
         </div>
-      </div>
     </section>
   );
 }
