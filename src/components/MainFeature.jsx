@@ -206,13 +206,7 @@ function MainFeature({ toast }) {
   return (
     <section className="py-16 bg-white dark:bg-surface-900">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">List Your Property</h2>
-            <p className="text-surface-600 dark:text-surface-400 max-w-2xl mx-auto">
-              Showcase your property to thousands of potential buyers and renters with our easy listing process
-            </p>
-          </div>
+    <div></div>
           
           {/* Progress steps */}
           <div className="mb-10">
